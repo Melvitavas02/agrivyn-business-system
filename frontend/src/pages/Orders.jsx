@@ -21,7 +21,7 @@ const [items, setItems] = useState([
 ]);
 
   const fetchOrders = () => {
-    fetch('http://localhost:5000/api/orders')
+    fetch('https://agrivyn-backend.onrender.com/api/orders')
       .then(response => response.json())
       .then(data => {
         setOrders(data);
@@ -31,7 +31,7 @@ const [items, setItems] = useState([
       });
   };
 const fetchOrderDetails = (orderId) => {
-  fetch(`http://localhost:5000/api/orders/${orderId}`)
+  fetch(`https://agrivyn-backend.onrender.com/api/orders/${orderId}`)
     .then(response => response.json())
     .then(data => {
       if (data.error) {
@@ -46,7 +46,7 @@ const fetchOrderDetails = (orderId) => {
     });
 };
 const updateOrderStatus = (orderId, status) => {
-  fetch(`http://localhost:5000/api/orders/${orderId}/status`, {
+  fetch(`https://agrivyn-backend.onrender.com/api/orders/${orderId}/status`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -71,7 +71,7 @@ const updateOrderStatus = (orderId, status) => {
     });
 };
   const fetchCustomers = () => {
-    fetch('http://localhost:5000/api/customers')
+    fetch('https://agrivyn-backend.onrender.com/api/customers')
       .then(response => response.json())
       .then(data => {
         setCustomers(data);
@@ -82,7 +82,7 @@ const updateOrderStatus = (orderId, status) => {
   };
 
   const fetchProducts = () => {
-    fetch('http://localhost:5000/api/products')
+    fetch('https://agrivyn-backend.onrender.com/api/products')
       .then(response => response.json())
       .then(data => {
         setProducts(data);
@@ -171,7 +171,7 @@ const handleSubmit = (event) => {
     })
   };
 
-  fetch('http://localhost:5000/api/orders', {
+  fetch('https://agrivyn-backend.onrender.com/api/orders', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

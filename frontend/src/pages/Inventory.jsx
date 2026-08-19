@@ -14,7 +14,7 @@ function Inventory() {
   });
 
   const fetchStock = () => {
-    fetch('http://localhost:5000/api/inventory/stock')
+    fetch('https://agrivyn-backend.onrender.com/api/inventory/stock')
       .then(response => response.json())
       .then(data => {
         setStock(data);
@@ -25,7 +25,7 @@ function Inventory() {
   };
 
   const fetchProducts = () => {
-    fetch('http://localhost:5000/api/products')
+    fetch('https://agrivyn-backend.onrender.com/api/products')
       .then(response => response.json())
       .then(data => {
         setProducts(data);
@@ -50,7 +50,7 @@ function Inventory() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    fetch('http://localhost:5000/api/inventory', {
+    fetch('https://agrivyn-backend.onrender.com/api/inventory', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

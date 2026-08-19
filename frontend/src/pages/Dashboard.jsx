@@ -9,7 +9,7 @@ function Dashboard() {
   });
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/analytics/summary')
+   fetch('https://agrivyn-backend.onrender.com/api/analytics/summary')
       .then(response => response.json())
       .then(data => {
         setSummary(data);

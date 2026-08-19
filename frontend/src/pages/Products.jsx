@@ -16,7 +16,7 @@ function Products() {
   const [editingProductId, setEditingProductId] = useState(null);
 
   const fetchProducts = () => {
-    fetch('http://localhost:5000/api/products')
+    fetch('https://agrivyn-backend.onrender.com/api/products')
       .then(response => response.json())
       .then(data => {
         setProducts(data);
@@ -58,7 +58,7 @@ const handleDelete = (productId) => {
     return;
   }
 
-  fetch(`http://localhost:5000/api/products/${productId}`, {
+  fetch(`https://agrivyn-backend.onrender.com/api/products/${productId}`, {
     method: 'DELETE'
   })
     .then(response => response.json())
@@ -75,8 +75,8 @@ const handleDelete = (productId) => {
   event.preventDefault();
 
   const url = editingProductId
-    ? `http://localhost:5000/api/products/${editingProductId}`
-    : 'http://localhost:5000/api/products';
+    ? `https://agrivyn-backend.onrender.com/api/products/${editingProductId}`
+    : 'https://agrivyn-backend.onrender.com/api/products';
 
   const method = editingProductId ? 'PUT' : 'POST';
 

@@ -14,7 +14,7 @@ function Customers() {
   const [editingCustomerId, setEditingCustomerId] = useState(null);
 
   const fetchCustomers = () => {
-    fetch('http://localhost:5000/api/customers')
+    fetch('https://agrivyn-backend.onrender.com/api/customers')
       .then(response => response.json())
       .then(data => {
         setCustomers(data);
@@ -54,7 +54,7 @@ const handleDelete = (customerId) => {
     return;
   }
 
-  fetch(`http://localhost:5000/api/customers/${customerId}`, {
+  fetch(`https://agrivyn-backend.onrender.com/api/customers/${customerId}`, {
     method: 'DELETE'
   })
     .then(response => response.json())
@@ -70,8 +70,8 @@ const handleDelete = (customerId) => {
   event.preventDefault();
 
   const url = editingCustomerId
-    ? `http://localhost:5000/api/customers/${editingCustomerId}`
-    : 'http://localhost:5000/api/customers';
+    ? `https://agrivyn-backend.onrender.com/api/customers/${editingCustomerId}`
+    : 'https://agrivyn-backend.onrender.com/api/customers';
 
   const method = editingCustomerId ? 'PUT' : 'POST';
 
