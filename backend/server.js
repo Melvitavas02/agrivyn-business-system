@@ -1080,7 +1080,7 @@ app.post('/api/login', (req, res) => {
     }
 
     const sql = `
-        SELECT user_id, username
+        SELECT id, username
         FROM users
         WHERE username = ? AND password = ?
     `;
