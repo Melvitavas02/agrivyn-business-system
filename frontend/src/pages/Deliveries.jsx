@@ -14,7 +14,7 @@ function Deliveries() {
   });
 
   const fetchDeliveries = () => {
-    fetch('http://localhost:5000/api/deliveries')
+    fetch('https://agrivyn-backend.onrender.com/api/deliveries')
       .then(response => response.json())
       .then(data => {
         setDeliveries(data);
@@ -25,7 +25,7 @@ function Deliveries() {
   };
 
   const fetchOrders = () => {
-    fetch('http://localhost:5000/api/orders')
+    fetch('https://agrivyn-backend.onrender.com/api/orders')
       .then(response => response.json())
       .then(data => {
         setOrders(data);
@@ -50,7 +50,7 @@ function Deliveries() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    fetch('http://localhost:5000/api/deliveries', {
+    fetch('https://agrivyn-backend.onrender.com/api/deliveries', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -94,7 +94,7 @@ function Deliveries() {
       ? delivery.delivery_date.substring(0, 10)
       : '';
 
-    fetch(`http://localhost:5000/api/deliveries/${deliveryId}`, {
+    fetch(`https://agrivyn-backend.onrender.com/api/deliveries/${deliveryId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -164,28 +164,33 @@ function Deliveries() {
                   Order
                 </label>
 
-                <select
-                  name="order_id"
-                  value={formData.order_id}
-                  onChange={handleChange}
-                  required
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
-                >
+              {/* Order */}
+<div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    Order
+  </label>
 
-                  <option value="">
-                    Select Order
-                  </option>
+  <select
+    name="order_id"
+    value={formData.order_id}
+    onChange={handleChange}
+    required
+    className="w-full border border-gray-300 rounded-lg px-3 py-2"
+  >
+    <option value="">
+      Select Order
+    </option>
 
-                  {orders.map(order => (
-                    <option
-                      key={order.order_id}
-                      value={order.order_id}
-                    >
-                      Order #{order.order_id} - ₹{order.total_amount}
-                    </option>
-                  ))}
-
-                </select>
+    {orders.map(order => (
+      <option
+        key={order.order_id}
+        value={order.order_id}
+      >
+        Order #{order.order_id} - ₹{order.total_amount} - {order.status}
+      </option>
+    ))}
+  </select>
+</div>
               </div>
 
 
