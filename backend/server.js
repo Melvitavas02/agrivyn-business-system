@@ -429,26 +429,77 @@ app.put('/api/products/:id', (req, res) => {
 app.delete('/api/products/:id', (req, res) => {
     const productId = req.params.id;
 
-    const sql = 'DELETE FROM products WHERE product_id = ?';
+    // First delete inventory transactions for this product
+    const deleteInventorySql = `
+        DELETE FROM inventory_transactions
+        WHERE product_id = ?
+    `;
 
-    db.query(sql, [productId], (err, result) => {
+    db.query(deleteInventorySql, [productId], (err) => {
+
         if (err) {
-            console.error('Database delete failed:', err.message);
-            res.status(500).json({
-                error: 'Failed to delete product'
+            console.error(
+                'Failed to delete inventory transactions:',
+                err.message
+            );
+
+            return res.status(500).json({
+                error: 'Failed to delete product inventory records'
             });
-            return;
         }
 
-        if (result.affectedRows === 0) {
-            res.status(404).json({
-                error: 'Product not found'
-            });
-            return;
-        }
+        // Delete order items that reference this product
+        const deleteOrderItemsSql = `
+            DELETE FROM order_items
+            WHERE product_id = ?
+        `;
 
-        res.json({
-            message: 'Product deleted successfully'
+        db.query(deleteOrderItemsSql, [productId], (err) => {
+
+            if (err) {
+                console.error(
+                    'Failed to delete order items:',
+                    err.message
+                );
+
+                return res.status(500).json({
+                    error: 'Failed to delete product order records'
+                });
+            }
+
+            // Finally delete the product
+            const deleteProductSql = `
+                DELETE FROM products
+                WHERE product_id = ?
+            `;
+
+            db.query(
+                deleteProductSql,
+                [productId],
+                (err, result) => {
+
+                    if (err) {
+                        console.error(
+                            'Database delete failed:',
+                            err.message
+                        );
+
+                        return res.status(500).json({
+                            error: 'Failed to delete product'
+                        });
+                    }
+
+                    if (result.affectedRows === 0) {
+                        return res.status(404).json({
+                            error: 'Product not found'
+                        });
+                    }
+
+                    res.json({
+                        message: 'Product deleted successfully'
+                    });
+                }
+            );
         });
     });
 });
