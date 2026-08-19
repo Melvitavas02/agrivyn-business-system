@@ -36,90 +36,106 @@ function Products() {
       [event.target.name]: event.target.value
     });
   };
+
   const handleEdit = (product) => {
-  setFormData({
-    product_name: product.product_name,
-    category: product.category,
-    price: product.price,
-    unit: product.unit,
-    stock_quantity: product.stock_quantity,
-    low_stock_limit: product.low_stock_limit
-  });
-
-  setEditingProductId(product.product_id);
-  setShowForm(true);
-};
-const handleDelete = (productId) => {
-  const confirmed = window.confirm(
-    'Are you sure you want to delete this product?'
-  );
-
-  if (!confirmed) {
-    return;
-  }
-
-  fetch(`https://agrivyn-backend.onrender.com/api/products/${productId}`, {
-    method: 'DELETE'
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      fetchProducts();
-    })
-    .catch(error => {
-      console.error('Failed to delete product:', error);
+    setFormData({
+      product_name: product.product_name,
+      category: product.category,
+      price: product.price,
+      unit: product.unit,
+      stock_quantity: product.stock_quantity,
+      low_stock_limit: product.low_stock_limit
     });
-};
+
+    setEditingProductId(product.product_id);
+    setShowForm(true);
+  };
+
+  const handleDelete = (productId) => {
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this product?'
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    fetch(`https://agrivyn-backend.onrender.com/api/products/${productId}`, {
+      method: 'DELETE'
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        fetchProducts();
+      })
+      .catch(error => {
+        console.error('Failed to delete product:', error);
+      });
+  };
 
   const handleSubmit = (event) => {
-  event.preventDefault();
+    event.preventDefault();
 
-  const url = editingProductId
-    ? `https://agrivyn-backend.onrender.com/api/products/${editingProductId}`
-    : 'https://agrivyn-backend.onrender.com/api/products';
+    const url = editingProductId
+      ? `https://agrivyn-backend.onrender.com/api/products/${editingProductId}`
+      : 'https://agrivyn-backend.onrender.com/api/products';
 
-  const method = editingProductId ? 'PUT' : 'POST';
+    const method = editingProductId ? 'PUT' : 'POST';
 
-  fetch(url, {
-    method: method,
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      ...formData,
-      price: Number(formData.price),
-      stock_quantity: Number(formData.stock_quantity),
-      low_stock_limit: Number(formData.low_stock_limit)
+    fetch(url, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        ...formData,
+        price: Number(formData.price),
+        stock_quantity: Number(formData.stock_quantity),
+        low_stock_limit: Number(formData.low_stock_limit)
+      })
     })
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
 
-      setFormData({
-        product_name: '',
-        category: '',
-        price: '',
-        unit: '',
-        stock_quantity: '',
-        low_stock_limit: ''
+        setFormData({
+          product_name: '',
+          category: '',
+          price: '',
+          unit: '',
+          stock_quantity: '',
+          low_stock_limit: ''
+        });
+
+        setEditingProductId(null);
+        setShowForm(false);
+
+        fetchProducts();
+      })
+      .catch(error => {
+        console.error('Failed to save product:', error);
       });
+  };
 
-      setEditingProductId(null);
-      setShowForm(false);
+  const handleCancel = () => {
+    setShowForm(false);
+    setEditingProductId(null);
 
-      fetchProducts();
-    })
-    .catch(error => {
-      console.error('Failed to save product:', error);
+    setFormData({
+      product_name: '',
+      category: '',
+      price: '',
+      unit: '',
+      stock_quantity: '',
+      low_stock_limit: ''
     });
-};
+  };
 
   return (
     <div>
 
       {/* Page Header */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
 
         <div>
           <h2 className="text-2xl font-semibold text-gray-800">
@@ -133,7 +149,7 @@ const handleDelete = (productId) => {
 
         <button
           onClick={() => setShowForm(!showForm)}
-          className="bg-green-700 text-white px-5 py-2 rounded-lg hover:bg-green-800"
+          className="w-full sm:w-auto bg-green-700 text-white px-5 py-3 rounded-lg hover:bg-green-800"
         >
           + Add Product
         </button>
@@ -143,11 +159,11 @@ const handleDelete = (productId) => {
 
       {/* Add Product Form */}
       {showForm && (
-        <div className="bg-white rounded-xl shadow p-6 mb-6">
+        <div className="bg-white rounded-xl shadow p-4 sm:p-6 mb-6">
 
           <h3 className="text-xl font-semibold text-gray-800 mb-5">
-  {editingProductId ? 'Edit Product' : 'Add New Product'}
-</h3>
+            {editingProductId ? 'Edit Product' : 'Add New Product'}
+          </h3>
 
           <form onSubmit={handleSubmit}>
 
@@ -165,7 +181,7 @@ const handleDelete = (productId) => {
                   value={formData.product_name}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
                   placeholder="Enter product name"
                 />
               </div>
@@ -182,7 +198,7 @@ const handleDelete = (productId) => {
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
                   placeholder="Enter category"
                 />
               </div>
@@ -202,7 +218,7 @@ const handleDelete = (productId) => {
                   required
                   min="0"
                   step="0.01"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
                   placeholder="Enter price"
                 />
               </div>
@@ -220,7 +236,7 @@ const handleDelete = (productId) => {
                   value={formData.unit}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
                   placeholder="e.g. kg"
                 />
               </div>
@@ -239,7 +255,7 @@ const handleDelete = (productId) => {
                   onChange={handleChange}
                   min="0"
                   step="0.01"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
                   placeholder="Enter initial stock"
                 />
               </div>
@@ -258,7 +274,7 @@ const handleDelete = (productId) => {
                   onChange={handleChange}
                   min="0"
                   step="0.01"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
                   placeholder="Enter low stock limit"
                 />
               </div>
@@ -267,19 +283,19 @@ const handleDelete = (productId) => {
 
 
             {/* Buttons */}
-            <div className="flex gap-3 mt-6">
+            <div className="flex flex-col sm:flex-row gap-3 mt-6">
 
               <button
                 type="submit"
-                className="bg-green-700 text-white px-5 py-2 rounded-lg hover:bg-green-800"
+                className="w-full sm:w-auto bg-green-700 text-white px-5 py-3 rounded-lg hover:bg-green-800"
               >
-               {editingProductId ? 'Update Product' : 'Save Product'}
+                {editingProductId ? 'Update Product' : 'Save Product'}
               </button>
 
               <button
                 type="button"
-                onClick={() => setShowForm(false)}
-                className="bg-gray-200 text-gray-700 px-5 py-2 rounded-lg hover:bg-gray-300"
+                onClick={handleCancel}
+                className="w-full sm:w-auto bg-gray-200 text-gray-700 px-5 py-3 rounded-lg hover:bg-gray-300"
               >
                 Cancel
               </button>
@@ -295,110 +311,120 @@ const handleDelete = (productId) => {
       {/* Products Table */}
       <div className="bg-white rounded-xl shadow overflow-hidden">
 
-        <table className="w-full">
+        {/* Horizontal scrolling on mobile */}
+        <div className="overflow-x-auto">
 
-          <thead className="bg-gray-50">
+          <table className="w-full min-w-[950px]">
 
-            <tr>
+            <thead className="bg-gray-50">
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                ID
-              </th>
+              <tr>
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Product
-              </th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  ID
+                </th>
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Category
-              </th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Product
+                </th>
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Price
-              </th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Category
+                </th>
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Unit
-              </th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Price
+                </th>
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Stock
-              </th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Unit
+                </th>
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Status
-              </th>
-<th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-  Actions
-</th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Stock
+                </th>
 
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Status
+                </th>
 
-            </tr>
-
-          </thead>
-
-
-          <tbody>
-
-            {products.map(product => (
-              <tr
-                key={product.product_id}
-                className="border-t"
-              >
-
-                <td className="px-6 py-4">
-                  {product.product_id}
-                </td>
-
-                <td className="px-6 py-4 font-medium text-gray-800">
-                  {product.product_name}
-                </td>
-
-                <td className="px-6 py-4">
-                  {product.category}
-                </td>
-
-                <td className="px-6 py-4">
-                  ₹{product.price}
-                </td>
-
-                <td className="px-6 py-4">
-                  {product.unit}
-                </td>
-
-                <td className="px-6 py-4">
-                  {product.stock_quantity} {product.unit}
-                </td>
-
-                <td className="px-6 py-4">
-                  {product.status}
-                </td>
-                <td className="px-6 py-4">
-  <div className="flex gap-4">
-
-    <button
-      onClick={() => handleEdit(product)}
-      className="text-blue-600 hover:text-blue-800 font-medium"
-    >
-      Edit
-    </button>
-
-    <button
-      onClick={() => handleDelete(product.product_id)}
-      className="text-red-600 hover:text-red-800 font-medium"
-    >
-      Delete
-    </button>
-
-  </div>
-</td>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Actions
+                </th>
 
               </tr>
-            ))}
 
-          </tbody>
+            </thead>
 
-        </table>
+
+            <tbody>
+
+              {products.map(product => (
+
+                <tr
+                  key={product.product_id}
+                  className="border-t"
+                >
+
+                  <td className="px-6 py-4">
+                    {product.product_id}
+                  </td>
+
+                  <td className="px-6 py-4 font-medium text-gray-800">
+                    {product.product_name}
+                  </td>
+
+                  <td className="px-6 py-4">
+                    {product.category}
+                  </td>
+
+                  <td className="px-6 py-4">
+                    ₹{product.price}
+                  </td>
+
+                  <td className="px-6 py-4">
+                    {product.unit}
+                  </td>
+
+                  <td className="px-6 py-4">
+                    {product.stock_quantity} {product.unit}
+                  </td>
+
+                  <td className="px-6 py-4">
+                    {product.status}
+                  </td>
+
+                  <td className="px-6 py-4">
+
+                    <div className="flex gap-4">
+
+                      <button
+                        onClick={() => handleEdit(product)}
+                        className="text-blue-600 hover:text-blue-800 font-medium"
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        onClick={() => handleDelete(product.product_id)}
+                        className="text-red-600 hover:text-red-800 font-medium"
+                      >
+                        Delete
+                      </button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              ))}
+
+            </tbody>
+
+          </table>
+
+        </div>
 
       </div>
 

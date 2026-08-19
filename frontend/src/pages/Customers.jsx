@@ -34,80 +34,95 @@ function Customers() {
       [event.target.name]: event.target.value
     });
   };
-const handleEdit = (customer) => {
-  setFormData({
-    name: customer.name,
-    phone: customer.phone,
-    address: customer.address,
-    location: customer.location
-  });
 
-  setEditingCustomerId(customer.customer_id);
-  setShowForm(true);
-};
-const handleDelete = (customerId) => {
-  const confirmed = window.confirm(
-    'Are you sure you want to delete this customer?'
-  );
-
-  if (!confirmed) {
-    return;
-  }
-
-  fetch(`https://agrivyn-backend.onrender.com/api/customers/${customerId}`, {
-    method: 'DELETE'
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      fetchCustomers();
-    })
-    .catch(error => {
-      console.error('Failed to delete customer:', error);
+  const handleEdit = (customer) => {
+    setFormData({
+      name: customer.name,
+      phone: customer.phone,
+      address: customer.address,
+      location: customer.location
     });
-};
-  const handleSubmit = (event) => {
-  event.preventDefault();
 
-  const url = editingCustomerId
-    ? `https://agrivyn-backend.onrender.com/api/customers/${editingCustomerId}`
-    : 'https://agrivyn-backend.onrender.com/api/customers';
+    setEditingCustomerId(customer.customer_id);
+    setShowForm(true);
+  };
 
-  const method = editingCustomerId ? 'PUT' : 'POST';
+  const handleDelete = (customerId) => {
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this customer?'
+    );
 
-  fetch(url, {
-    method: method,
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(formData)
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
+    if (!confirmed) {
+      return;
+    }
 
-      setFormData({
-        name: '',
-        phone: '',
-        address: '',
-        location: ''
+    fetch(`https://agrivyn-backend.onrender.com/api/customers/${customerId}`, {
+      method: 'DELETE'
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        fetchCustomers();
+      })
+      .catch(error => {
+        console.error('Failed to delete customer:', error);
       });
+  };
 
-      setEditingCustomerId(null);
-      setShowForm(false);
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-      fetchCustomers();
+    const url = editingCustomerId
+      ? `https://agrivyn-backend.onrender.com/api/customers/${editingCustomerId}`
+      : 'https://agrivyn-backend.onrender.com/api/customers';
+
+    const method = editingCustomerId ? 'PUT' : 'POST';
+
+    fetch(url, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
     })
-    .catch(error => {
-      console.error('Failed to save customer:', error);
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+
+        setFormData({
+          name: '',
+          phone: '',
+          address: '',
+          location: ''
+        });
+
+        setEditingCustomerId(null);
+        setShowForm(false);
+
+        fetchCustomers();
+      })
+      .catch(error => {
+        console.error('Failed to save customer:', error);
+      });
+  };
+
+  const handleCancel = () => {
+    setShowForm(false);
+    setEditingCustomerId(null);
+
+    setFormData({
+      name: '',
+      phone: '',
+      address: '',
+      location: ''
     });
-};
+  };
 
   return (
     <div>
 
       {/* Page Header */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
 
         <div>
           <h2 className="text-2xl font-semibold text-gray-800">
@@ -121,7 +136,7 @@ const handleDelete = (customerId) => {
 
         <button
           onClick={() => setShowForm(!showForm)}
-          className="bg-green-700 text-white px-5 py-2 rounded-lg hover:bg-green-800"
+          className="w-full sm:w-auto bg-green-700 text-white px-5 py-3 rounded-lg hover:bg-green-800"
         >
           + Add Customer
         </button>
@@ -131,11 +146,11 @@ const handleDelete = (customerId) => {
 
       {/* Add Customer Form */}
       {showForm && (
-        <div className="bg-white rounded-xl shadow p-6 mb-6">
+        <div className="bg-white rounded-xl shadow p-4 sm:p-6 mb-6">
 
           <h3 className="text-xl font-semibold text-gray-800 mb-5">
-  {editingCustomerId ? 'Edit Customer' : 'Add New Customer'}
-</h3>
+            {editingCustomerId ? 'Edit Customer' : 'Add New Customer'}
+          </h3>
 
           <form onSubmit={handleSubmit}>
 
@@ -153,7 +168,7 @@ const handleDelete = (customerId) => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
                   placeholder="Enter customer name"
                 />
               </div>
@@ -171,7 +186,7 @@ const handleDelete = (customerId) => {
                   value={formData.phone}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
                   placeholder="Enter phone number"
                 />
               </div>
@@ -188,7 +203,7 @@ const handleDelete = (customerId) => {
                   name="address"
                   value={formData.address}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
                   placeholder="Enter address"
                 />
               </div>
@@ -205,29 +220,28 @@ const handleDelete = (customerId) => {
                   name="location"
                   value={formData.location}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
                   placeholder="Enter location"
                 />
               </div>
-              
 
             </div>
 
 
             {/* Buttons */}
-            <div className="flex gap-3 mt-6">
+            <div className="flex flex-col sm:flex-row gap-3 mt-6">
 
               <button
                 type="submit"
-                className="bg-green-700 text-white px-5 py-2 rounded-lg hover:bg-green-800"
+                className="w-full sm:w-auto bg-green-700 text-white px-5 py-3 rounded-lg hover:bg-green-800"
               >
-               {editingCustomerId ? 'Update Customer' : 'Save Customer'}
+                {editingCustomerId ? 'Update Customer' : 'Save Customer'}
               </button>
 
               <button
                 type="button"
-                onClick={() => setShowForm(false)}
-                className="bg-gray-200 text-gray-700 px-5 py-2 rounded-lg hover:bg-gray-300"
+                onClick={handleCancel}
+                className="w-full sm:w-auto bg-gray-200 text-gray-700 px-5 py-3 rounded-lg hover:bg-gray-300"
               >
                 Cancel
               </button>
@@ -243,93 +257,104 @@ const handleDelete = (customerId) => {
       {/* Customer Table */}
       <div className="bg-white rounded-xl shadow overflow-hidden">
 
-        <table className="w-full">
+        {/* Horizontal scrolling on mobile */}
+        <div className="overflow-x-auto">
 
-          <thead className="bg-gray-50">
+          <table className="w-full min-w-[850px]">
 
-            <tr>
+            <thead className="bg-gray-50">
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                ID
-              </th>
+              <tr>
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Name
-              </th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  ID
+                </th>
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Phone
-              </th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Name
+                </th>
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Address
-              </th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Phone
+                </th>
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Location
-              </th>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-  Actions
-</th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Address
+                </th>
 
-            </tr>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Location
+                </th>
 
-          </thead>
-
-
-          <tbody>
-
-            {customers.map(customer => (
-              <tr
-                key={customer.customer_id}
-                className="border-t"
-              >
-
-                <td className="px-6 py-4">
-                  {customer.customer_id}
-                </td>
-
-                <td className="px-6 py-4 font-medium text-gray-800">
-                  {customer.name}
-                </td>
-
-                <td className="px-6 py-4">
-                  {customer.phone}
-                </td>
-
-                <td className="px-6 py-4">
-                  {customer.address}
-                </td>
-
-                <td className="px-6 py-4">
-                  {customer.location}
-                </td>
-                <td className="px-6 py-4">
-  <div className="flex gap-4">
-
-    <button
-      onClick={() => handleEdit(customer)}
-      className="text-blue-600 hover:text-blue-800 font-medium"
-    >
-      Edit
-    </button>
-
-    <button
-      onClick={() => handleDelete(customer.customer_id)}
-      className="text-red-600 hover:text-red-800 font-medium"
-    >
-      Delete
-    </button>
-
-  </div>
-</td>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Actions
+                </th>
 
               </tr>
-            ))}
 
-          </tbody>
+            </thead>
 
-        </table>
+
+            <tbody>
+
+              {customers.map(customer => (
+
+                <tr
+                  key={customer.customer_id}
+                  className="border-t"
+                >
+
+                  <td className="px-6 py-4">
+                    {customer.customer_id}
+                  </td>
+
+                  <td className="px-6 py-4 font-medium text-gray-800">
+                    {customer.name}
+                  </td>
+
+                  <td className="px-6 py-4">
+                    {customer.phone}
+                  </td>
+
+                  <td className="px-6 py-4">
+                    {customer.address}
+                  </td>
+
+                  <td className="px-6 py-4">
+                    {customer.location}
+                  </td>
+
+                  <td className="px-6 py-4">
+
+                    <div className="flex gap-4">
+
+                      <button
+                        onClick={() => handleEdit(customer)}
+                        className="text-blue-600 hover:text-blue-800 font-medium"
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        onClick={() => handleDelete(customer.customer_id)}
+                        className="text-red-600 hover:text-red-800 font-medium"
+                      >
+                        Delete
+                      </button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              ))}
+
+            </tbody>
+
+          </table>
+
+        </div>
 
       </div>
 

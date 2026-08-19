@@ -212,7 +212,7 @@ const handleSubmit = (event) => {
     <div>
 
       {/* Page Header */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
 
         <div>
           <h2 className="text-2xl font-semibold text-gray-800">
@@ -226,7 +226,7 @@ const handleSubmit = (event) => {
 
         <button
           onClick={() => setShowForm(!showForm)}
-          className="bg-green-700 text-white px-5 py-2 rounded-lg hover:bg-green-800"
+          className="w-full sm:w-auto bg-green-700 text-white px-5 py-3 rounded-lg hover:bg-green-800"
         >
           + Create Order
         </button>
@@ -236,7 +236,7 @@ const handleSubmit = (event) => {
 
       {/* Create Order Form */}
       {showForm && (
-        <div className="bg-white rounded-xl shadow p-6 mb-6">
+        <div className="bg-white rounded-xl shadow p-4 sm:p-6 mb-6">
 
           <h3 className="text-xl font-semibold text-gray-800 mb-5">
             Create New Order
@@ -257,7 +257,7 @@ const handleSubmit = (event) => {
                   value={formData.customer_id}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
                 >
                   <option value="">
                     Select Customer
@@ -426,11 +426,11 @@ const handleSubmit = (event) => {
 
 
             {/* Buttons */}
-            <div className="flex gap-3 mt-6">
+            <div className="flex flex-col sm:flex-row gap-3 mt-6">
 
               <button
                 type="submit"
-                className="bg-green-700 text-white px-5 py-2 rounded-lg hover:bg-green-800"
+               className="w-full sm:w-auto bg-green-700 text-white px-5 py-3 rounded-lg hover:bg-green-800"
               >
                 Create Order
               </button>
@@ -438,7 +438,7 @@ const handleSubmit = (event) => {
               <button
                 type="button"
                 onClick={() => setShowForm(false)}
-                className="bg-gray-200 text-gray-700 px-5 py-2 rounded-lg hover:bg-gray-300"
+               className="w-full sm:w-auto bg-gray-200 text-gray-700 px-5 py-3 rounded-lg hover:bg-gray-300"
               >
                 Cancel
               </button>
@@ -455,7 +455,9 @@ const handleSubmit = (event) => {
       {/* Orders Table */}
       <div className="bg-white rounded-xl shadow overflow-hidden">
 
-        <table className="w-full">
+  <div className="overflow-x-auto">
+
+    <table className="w-full min-w-[800px]">
 
           <thead className="bg-gray-50">
 
@@ -543,9 +545,11 @@ const handleSubmit = (event) => {
 
           </tbody>
 
-        </table>
+                </table>
 
       </div>
+
+    </div>
             
 
 
@@ -553,7 +557,7 @@ const handleSubmit = (event) => {
       {selectedOrder && (
         <div className="bg-white rounded-xl shadow p-6 mt-6">
 
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
 
             <div>
               <h3 className="text-xl font-semibold text-gray-800">
@@ -567,7 +571,7 @@ const handleSubmit = (event) => {
 
             <button
               onClick={() => setSelectedOrder(null)}
-              className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300"
+              className="w-full sm:w-auto bg-gray-200 text-gray-700 px-4 py-3 rounded-lg hover:bg-gray-300"
             >
               Close
             </button>
@@ -619,9 +623,11 @@ const handleSubmit = (event) => {
             Products
           </h4>
 
-          <div className="overflow-hidden border rounded-lg">
+         <div className="overflow-hidden border rounded-lg">
 
-            <table className="w-full">
+  <div className="overflow-x-auto">
+
+    <table className="w-full min-w-[600px]">
 
               <thead className="bg-gray-50">
 
@@ -680,6 +686,7 @@ const handleSubmit = (event) => {
 
             </table>
 
+          </div>
           </div>
 
 

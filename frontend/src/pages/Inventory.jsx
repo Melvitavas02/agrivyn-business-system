@@ -90,7 +90,7 @@ function Inventory() {
     <div>
 
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
 
         <div>
           <h2 className="text-2xl font-semibold text-gray-800">
@@ -104,7 +104,7 @@ function Inventory() {
 
         <button
           onClick={() => setShowForm(!showForm)}
-          className="bg-green-700 text-white px-5 py-2 rounded-lg hover:bg-green-800"
+          className="w-full sm:w-auto bg-green-700 text-white px-5 py-3 rounded-lg hover:bg-green-800"
         >
           + Add Transaction
         </button>
@@ -114,7 +114,7 @@ function Inventory() {
 
       {/* Transaction Form */}
       {showForm && (
-        <div className="bg-white rounded-xl shadow p-6 mb-6">
+        <div className="bg-white rounded-xl shadow p-4 sm:p-6 mb-6">
 
           <h3 className="text-xl font-semibold text-gray-800 mb-5">
             Add Inventory Transaction
@@ -136,7 +136,7 @@ function Inventory() {
                   value={formData.product_id}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
                 >
 
                   <option value="">
@@ -168,7 +168,7 @@ function Inventory() {
                   name="transaction_type"
                   value={formData.transaction_type}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
                 >
 
                   <option value="Stock In">
@@ -203,7 +203,7 @@ function Inventory() {
                   required
                   min="0.01"
                   step="0.01"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
                   placeholder="Enter quantity"
                 />
 
@@ -222,7 +222,7 @@ function Inventory() {
                   name="notes"
                   value={formData.notes}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
                   placeholder="Optional notes"
                 />
 
@@ -232,11 +232,11 @@ function Inventory() {
 
 
             {/* Buttons */}
-            <div className="flex gap-3 mt-6">
+            <div className="flex flex-col sm:flex-row gap-3 mt-6">
 
               <button
                 type="submit"
-                className="bg-green-700 text-white px-5 py-2 rounded-lg hover:bg-green-800"
+                className="w-full sm:w-auto bg-green-700 text-white px-5 py-3 rounded-lg hover:bg-green-800"
               >
                 Save Transaction
               </button>
@@ -244,7 +244,7 @@ function Inventory() {
               <button
                 type="button"
                 onClick={() => setShowForm(false)}
-                className="bg-gray-200 text-gray-700 px-5 py-2 rounded-lg hover:bg-gray-300"
+                className="w-full sm:w-auto bg-gray-200 text-gray-700 px-5 py-3 rounded-lg hover:bg-gray-300"
               >
                 Cancel
               </button>
@@ -260,74 +260,78 @@ function Inventory() {
       {/* Stock Table */}
       <div className="bg-white rounded-xl shadow overflow-hidden">
 
-        <table className="w-full">
+        <div className="overflow-x-auto">
 
-          <thead className="bg-gray-50">
+          <table className="w-full min-w-[650px]">
 
-            <tr>
+            <thead className="bg-gray-50">
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Product
-              </th>
+              <tr>
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Unit
-              </th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Product
+                </th>
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Current Stock
-              </th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Unit
+                </th>
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Stock Status
-              </th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Current Stock
+                </th>
 
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {stock.map(item => (
-
-              <tr
-                key={item.product_id}
-                className="border-t"
-              >
-
-                <td className="px-6 py-4 font-medium text-gray-800">
-                  {item.product_name}
-                </td>
-
-                <td className="px-6 py-4">
-                  {item.unit}
-                </td>
-
-                <td className="px-6 py-4">
-                  {Number(item.current_stock).toFixed(2)}
-                </td>
-
-                <td className="px-6 py-4">
-
-                  {Number(item.current_stock) <= 10 ? (
-                    <span className="text-red-600 font-medium">
-                      Low Stock
-                    </span>
-                  ) : (
-                    <span className="text-green-600 font-medium">
-                      In Stock
-                    </span>
-                  )}
-
-                </td>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Stock Status
+                </th>
 
               </tr>
 
-            ))}
+            </thead>
 
-          </tbody>
+            <tbody>
 
-        </table>
+              {stock.map(item => (
+
+                <tr
+                  key={item.product_id}
+                  className="border-t"
+                >
+
+                  <td className="px-6 py-4 font-medium text-gray-800">
+                    {item.product_name}
+                  </td>
+
+                  <td className="px-6 py-4">
+                    {item.unit}
+                  </td>
+
+                  <td className="px-6 py-4">
+                    {Number(item.current_stock).toFixed(2)}
+                  </td>
+
+                  <td className="px-6 py-4">
+
+                    {Number(item.current_stock) <= 10 ? (
+                      <span className="text-red-600 font-medium">
+                        Low Stock
+                      </span>
+                    ) : (
+                      <span className="text-green-600 font-medium">
+                        In Stock
+                      </span>
+                    )}
+
+                  </td>
+
+                </tr>
+
+              ))}
+
+            </tbody>
+
+          </table>
+
+        </div>
 
       </div>
 

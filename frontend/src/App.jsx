@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 
 import Login from './pages/Login';
@@ -11,6 +12,7 @@ import Analytics from './pages/Analytics';
 
 function App() {
   const location = useLocation();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Check whether user is logged in
   const user = localStorage.getItem('user');
@@ -25,68 +27,118 @@ function App() {
     return <Navigate to="/login" replace />;
   }
 
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex">
 
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-40 md:hidden"
+          onClick={closeSidebar}
+        ></div>
+      )}
+
       {/* Sidebar */}
-      <aside className="w-64 bg-green-800 text-white min-h-screen p-6">
+      <aside
+        className={`
+          fixed md:static
+          top-0 left-0
+          z-50
+          w-64
+          bg-green-800
+          text-white
+          min-h-screen
+          p-6
+          transform
+          transition-transform
+          duration-300
+          ease-in-out
+          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+        `}
+      >
 
-        <h1 className="text-2xl font-bold mb-8">
-          Agrivyn
-        </h1>
+        {/* Logo + Mobile Close */}
+        <div className="flex items-center justify-between mb-8">
 
-        <nav className="space-y-3">
+          <h1 className="text-2xl font-bold">
+            Agrivyn
+          </h1>
+
+          <button
+            onClick={closeSidebar}
+            className="md:hidden text-white text-2xl"
+          >
+            ×
+          </button>
+
+        </div>
+
+
+        {/* Navigation */}
+        <nav className="space-y-2">
 
           <Link
             to="/dashboard"
-            className="block px-4 py-2 rounded hover:bg-green-700"
+            onClick={closeSidebar}
+            className="block px-4 py-3 rounded hover:bg-green-700"
           >
             Dashboard
           </Link>
 
           <Link
             to="/customers"
-            className="block px-4 py-2 rounded hover:bg-green-700"
+            onClick={closeSidebar}
+            className="block px-4 py-3 rounded hover:bg-green-700"
           >
             Customers
           </Link>
 
           <Link
             to="/products"
-            className="block px-4 py-2 rounded hover:bg-green-700"
+            onClick={closeSidebar}
+            className="block px-4 py-3 rounded hover:bg-green-700"
           >
             Products
           </Link>
 
           <Link
             to="/orders"
-            className="block px-4 py-2 rounded hover:bg-green-700"
+            onClick={closeSidebar}
+            className="block px-4 py-3 rounded hover:bg-green-700"
           >
             Orders
           </Link>
 
           <Link
             to="/inventory"
-            className="block px-4 py-2 rounded hover:bg-green-700"
+            onClick={closeSidebar}
+            className="block px-4 py-3 rounded hover:bg-green-700"
           >
             Inventory
           </Link>
 
           <Link
             to="/deliveries"
-            className="block px-4 py-2 rounded hover:bg-green-700"
+            onClick={closeSidebar}
+            className="block px-4 py-3 rounded hover:bg-green-700"
           >
             Deliveries
           </Link>
 
           <Link
             to="/analytics"
-            className="block px-4 py-2 rounded hover:bg-green-700"
+            onClick={closeSidebar}
+            className="block px-4 py-3 rounded hover:bg-green-700"
           >
             Analytics
           </Link>
 
         </nav>
+
 
         {/* Logout */}
         <button
@@ -94,7 +146,7 @@ function App() {
             localStorage.removeItem('user');
             window.location.href = '/login';
           }}
-          className="mt-8 w-full bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700"
+          className="mt-8 w-full bg-red-600 px-4 py-3 rounded-lg hover:bg-red-700"
         >
           Logout
         </button>
@@ -103,24 +155,39 @@ function App() {
 
 
       {/* Main Area */}
-      <main className="flex-1">
+      <main className="flex-1 min-w-0">
 
         {/* Header */}
-        <header className="bg-white shadow-sm px-8 py-5">
+        <header className="bg-white shadow-sm px-4 sm:px-8 py-4 sm:py-5">
 
-          <h2 className="text-2xl font-semibold text-gray-800">
-            Agrivyn
-          </h2>
+          <div className="flex items-center gap-4">
 
-          <p className="text-gray-500 mt-1">
-            Business Management System
-          </p>
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="md:hidden text-green-800 text-3xl leading-none"
+              aria-label="Open menu"
+            >
+              ☰
+            </button>
+
+            <div>
+              <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">
+                Agrivyn
+              </h2>
+
+              <p className="text-gray-500 mt-1 text-sm sm:text-base">
+                Business Management System
+              </p>
+            </div>
+
+          </div>
 
         </header>
 
 
         {/* Content */}
-        <section className="p-8">
+        <section className="p-4 sm:p-6 md:p-8 overflow-x-hidden">
 
           <Routes>
 

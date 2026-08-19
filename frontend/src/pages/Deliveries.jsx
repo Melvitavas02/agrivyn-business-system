@@ -124,7 +124,7 @@ function Deliveries() {
     <div>
 
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
 
         <div>
           <h2 className="text-2xl font-semibold text-gray-800">
@@ -138,7 +138,7 @@ function Deliveries() {
 
         <button
           onClick={() => setShowForm(!showForm)}
-          className="bg-green-700 text-white px-5 py-2 rounded-lg hover:bg-green-800"
+          className="w-full sm:w-auto bg-green-700 text-white px-5 py-3 rounded-lg hover:bg-green-800"
         >
           + Create Delivery
         </button>
@@ -148,7 +148,7 @@ function Deliveries() {
 
       {/* Create Delivery Form */}
       {showForm && (
-        <div className="bg-white rounded-xl shadow p-6 mb-6">
+        <div className="bg-white rounded-xl shadow p-4 sm:p-6 mb-6">
 
           <h3 className="text-xl font-semibold text-gray-800 mb-5">
             Create Delivery
@@ -158,35 +158,42 @@ function Deliveries() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-{/* Order */}
-<div>
-  <label className="block text-sm font-medium text-gray-700 mb-1">
-    Order
-  </label>
+              {/* Order */}
+              <div>
 
-  <select
-    name="order_id"
-    value={formData.order_id}
-    onChange={handleChange}
-    required
-    className="w-full border border-gray-300 rounded-lg px-3 py-2"
-  >
-    <option value="">
-      Select Order
-    </option>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Order
+                </label>
 
-    {orders.map(order => (
-      <option
-        key={order.order_id}
-        value={order.order_id}
-      >
-        Order #{order.order_id} - ₹{order.total_amount} - {order.status}
-      </option>
-    ))}
-  </select>
-</div>
+                <select
+                  name="order_id"
+                  value={formData.order_id}
+                  onChange={handleChange}
+                  required
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
+                >
+
+                  <option value="">
+                    Select Order
+                  </option>
+
+                  {orders.map(order => (
+                    <option
+                      key={order.order_id}
+                      value={order.order_id}
+                    >
+                      Order #{order.order_id} - ₹{order.total_amount} - {order.status}
+                    </option>
+                  ))}
+
+                </select>
+
+              </div>
+
+
               {/* Delivery Date */}
               <div>
+
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Delivery Date
                 </label>
@@ -197,13 +204,15 @@ function Deliveries() {
                   value={formData.delivery_date}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
                 />
+
               </div>
 
 
               {/* Status */}
               <div>
+
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Status
                 </label>
@@ -212,7 +221,7 @@ function Deliveries() {
                   name="status"
                   value={formData.status}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
                 >
 
                   <option value="Pending">
@@ -232,11 +241,13 @@ function Deliveries() {
                   </option>
 
                 </select>
+
               </div>
 
 
               {/* Notes */}
               <div>
+
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Notes
                 </label>
@@ -246,20 +257,21 @@ function Deliveries() {
                   name="notes"
                   value={formData.notes}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-3"
                   placeholder="Optional notes"
                 />
+
               </div>
 
             </div>
 
 
             {/* Buttons */}
-            <div className="flex gap-3 mt-6">
+            <div className="flex flex-col sm:flex-row gap-3 mt-6">
 
               <button
                 type="submit"
-                className="bg-green-700 text-white px-5 py-2 rounded-lg hover:bg-green-800"
+                className="w-full sm:w-auto bg-green-700 text-white px-5 py-3 rounded-lg hover:bg-green-800"
               >
                 Save Delivery
               </button>
@@ -267,7 +279,7 @@ function Deliveries() {
               <button
                 type="button"
                 onClick={() => setShowForm(false)}
-                className="bg-gray-200 text-gray-700 px-5 py-2 rounded-lg hover:bg-gray-300"
+                className="w-full sm:w-auto bg-gray-200 text-gray-700 px-5 py-3 rounded-lg hover:bg-gray-300"
               >
                 Cancel
               </button>
@@ -283,103 +295,107 @@ function Deliveries() {
       {/* Deliveries Table */}
       <div className="bg-white rounded-xl shadow overflow-hidden">
 
-        <table className="w-full">
+        <div className="overflow-x-auto">
 
-          <thead className="bg-gray-50">
+          <table className="w-full min-w-[750px]">
 
-            <tr>
+            <thead className="bg-gray-50">
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Delivery ID
-              </th>
+              <tr>
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Order ID
-              </th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Delivery ID
+                </th>
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Delivery Date
-              </th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Order ID
+                </th>
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Status
-              </th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Delivery Date
+                </th>
 
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Notes
-              </th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Status
+                </th>
 
-            </tr>
-
-          </thead>
-
-
-          <tbody>
-
-            {deliveries.map(delivery => (
-
-              <tr
-                key={delivery.delivery_id}
-                className="border-t"
-              >
-
-                <td className="px-6 py-4">
-                  {delivery.delivery_id}
-                </td>
-
-                <td className="px-6 py-4 font-medium">
-                  #{delivery.order_id}
-                </td>
-
-                <td className="px-6 py-4">
-                  {delivery.delivery_date}
-                </td>
-
-                <td className="px-6 py-4">
-
-                  <select
-                    value={delivery.status}
-                    onChange={(event) =>
-                      updateDeliveryStatus(
-                        delivery.delivery_id,
-                        event.target.value,
-                        delivery
-                      )
-                    }
-                    className="border border-gray-300 rounded-lg px-3 py-2 text-sm"
-                  >
-
-                    <option value="Pending">
-                      Pending
-                    </option>
-
-                    <option value="Out for Delivery">
-                      Out for Delivery
-                    </option>
-
-                    <option value="Delivered">
-                      Delivered
-                    </option>
-
-                    <option value="Cancelled">
-                      Cancelled
-                    </option>
-
-                  </select>
-
-                </td>
-
-                <td className="px-6 py-4">
-                  {delivery.notes || '-'}
-                </td>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Notes
+                </th>
 
               </tr>
 
-            ))}
+            </thead>
 
-          </tbody>
 
-        </table>
+            <tbody>
+
+              {deliveries.map(delivery => (
+
+                <tr
+                  key={delivery.delivery_id}
+                  className="border-t"
+                >
+
+                  <td className="px-6 py-4">
+                    {delivery.delivery_id}
+                  </td>
+
+                  <td className="px-6 py-4 font-medium">
+                    #{delivery.order_id}
+                  </td>
+
+                  <td className="px-6 py-4">
+                    {delivery.delivery_date}
+                  </td>
+
+                  <td className="px-6 py-4">
+
+                    <select
+                      value={delivery.status}
+                      onChange={(event) =>
+                        updateDeliveryStatus(
+                          delivery.delivery_id,
+                          event.target.value,
+                          delivery
+                        )
+                      }
+                      className="border border-gray-300 rounded-lg px-3 py-2 text-sm"
+                    >
+
+                      <option value="Pending">
+                        Pending
+                      </option>
+
+                      <option value="Out for Delivery">
+                        Out for Delivery
+                      </option>
+
+                      <option value="Delivered">
+                        Delivered
+                      </option>
+
+                      <option value="Cancelled">
+                        Cancelled
+                      </option>
+
+                    </select>
+
+                  </td>
+
+                  <td className="px-6 py-4">
+                    {delivery.notes || '-'}
+                  </td>
+
+                </tr>
+
+              ))}
+
+            </tbody>
+
+          </table>
+
+        </div>
 
       </div>
 

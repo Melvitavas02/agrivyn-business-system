@@ -22,7 +22,7 @@ function Analytics() {
   };
 
   const fetchProductSales = () => {
-    fetch('http://localhost:5000/api/analytics/product-sales')
+    fetch('https://agrivyn-backend.onrender.com/api/analytics/product-sales')
       .then(response => response.json())
       .then(data => {
         setProductSales(data);
@@ -55,10 +55,10 @@ function Analytics() {
 
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
 
         {/* Customers */}
-        <div className="bg-white rounded-xl shadow p-6">
+        <div className="bg-white rounded-xl shadow p-5 sm:p-6">
 
           <p className="text-gray-500 text-sm">
             Total Customers
@@ -72,7 +72,7 @@ function Analytics() {
 
 
         {/* Products */}
-        <div className="bg-white rounded-xl shadow p-6">
+        <div className="bg-white rounded-xl shadow p-5 sm:p-6">
 
           <p className="text-gray-500 text-sm">
             Total Products
@@ -86,7 +86,7 @@ function Analytics() {
 
 
         {/* Orders */}
-        <div className="bg-white rounded-xl shadow p-6">
+        <div className="bg-white rounded-xl shadow p-5 sm:p-6">
 
           <p className="text-gray-500 text-sm">
             Total Orders
@@ -100,7 +100,7 @@ function Analytics() {
 
 
         {/* Revenue */}
-        <div className="bg-white rounded-xl shadow p-6">
+        <div className="bg-white rounded-xl shadow p-5 sm:p-6">
 
           <p className="text-gray-500 text-sm">
             Total Revenue
@@ -118,7 +118,7 @@ function Analytics() {
       {/* Product Sales */}
       <div className="bg-white rounded-xl shadow overflow-hidden">
 
-        <div className="p-6 border-b">
+        <div className="p-4 sm:p-6 border-b">
 
           <h3 className="text-xl font-semibold text-gray-800">
             Product Sales
@@ -131,81 +131,86 @@ function Analytics() {
         </div>
 
 
-        <table className="w-full">
+        {/* Responsive Table */}
+        <div className="overflow-x-auto">
 
-          <thead className="bg-gray-50">
+          <table className="w-full min-w-[650px]">
 
-            <tr>
-
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Product
-              </th>
-
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Unit
-              </th>
-
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Quantity Sold
-              </th>
-
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
-                Revenue
-              </th>
-
-            </tr>
-
-          </thead>
-
-
-          <tbody>
-
-            {productSales.map(product => (
-
-              <tr
-                key={product.product_id}
-                className="border-t"
-              >
-
-                <td className="px-6 py-4 font-medium text-gray-800">
-                  {product.product_name}
-                </td>
-
-                <td className="px-6 py-4">
-                  {product.unit}
-                </td>
-
-                <td className="px-6 py-4">
-                  {Number(product.quantity_sold).toFixed(2)}
-                </td>
-
-                <td className="px-6 py-4 font-medium">
-                  ₹{Number(product.total_revenue).toFixed(2)}
-                </td>
-
-              </tr>
-
-            ))}
-
-
-            {productSales.length === 0 && (
+            <thead className="bg-gray-50">
 
               <tr>
 
-                <td
-                  colSpan="4"
-                  className="px-6 py-8 text-center text-gray-500"
-                >
-                  No sales data available.
-                </td>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Product
+                </th>
+
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Unit
+                </th>
+
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Quantity Sold
+                </th>
+
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                  Revenue
+                </th>
 
               </tr>
 
-            )}
+            </thead>
 
-          </tbody>
 
-        </table>
+            <tbody>
+
+              {productSales.map(product => (
+
+                <tr
+                  key={product.product_id}
+                  className="border-t"
+                >
+
+                  <td className="px-6 py-4 font-medium text-gray-800">
+                    {product.product_name}
+                  </td>
+
+                  <td className="px-6 py-4">
+                    {product.unit}
+                  </td>
+
+                  <td className="px-6 py-4">
+                    {Number(product.quantity_sold).toFixed(2)}
+                  </td>
+
+                  <td className="px-6 py-4 font-medium">
+                    ₹{Number(product.total_revenue).toFixed(2)}
+                  </td>
+
+                </tr>
+
+              ))}
+
+
+              {productSales.length === 0 && (
+
+                <tr>
+
+                  <td
+                    colSpan="4"
+                    className="px-6 py-8 text-center text-gray-500"
+                  >
+                    No sales data available.
+                  </td>
+
+                </tr>
+
+              )}
+
+            </tbody>
+
+          </table>
+
+        </div>
 
       </div>
 
