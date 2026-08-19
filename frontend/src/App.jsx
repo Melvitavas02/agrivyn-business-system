@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { Link, Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
 
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -13,6 +13,7 @@ import Analytics from './pages/Analytics';
 function App() {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Check whether user is logged in
   const user = localStorage.getItem('user');
@@ -142,14 +143,14 @@ function App() {
 
         {/* Logout */}
         <button
-          onClick={() => {
-            localStorage.removeItem('user');
-            window.location.href = '/login';
-          }}
-          className="mt-8 w-full bg-red-600 px-4 py-3 rounded-lg hover:bg-red-700"
-        >
-          Logout
-        </button>
+  onClick={() => {
+    localStorage.removeItem('user');
+    navigate('/login');
+  }}
+  className="mt-8 w-full bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700"
+>
+  Logout
+</button>
 
       </aside>
 
