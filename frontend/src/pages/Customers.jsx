@@ -130,7 +130,7 @@ function Customers() {
           </h2>
 
           <p className="text-gray-500 mt-1">
-            Manage your business customers
+            Add new customers and manage their contact and location details.
           </p>
         </div>
 

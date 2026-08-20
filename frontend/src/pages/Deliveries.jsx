@@ -132,7 +132,7 @@ function Deliveries() {
           </h2>
 
           <p className="text-gray-500 mt-1">
-            Manage order deliveries
+            Create deliveries for orders and track their delivery date and status.
           </p>
         </div>
 

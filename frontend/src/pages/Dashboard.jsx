@@ -29,7 +29,7 @@ function Dashboard() {
         </h2>
 
         <p className="text-gray-500 mt-1">
-          Overview of your Agrivyn
+          OView a quick overview of your business activities, orders, inventory, and sales.
         </p>
       </div>
 

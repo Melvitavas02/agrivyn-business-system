@@ -98,7 +98,7 @@ function Inventory() {
           </h2>
 
           <p className="text-gray-500 mt-1">
-            Manage stock and inventory transactions
+            Record stock movements and track the current stock available for each product.
           </p>
         </div>
 

@@ -143,7 +143,7 @@ function Products() {
           </h2>
 
           <p className="text-gray-500 mt-1">
-            Manage your products and stock
+            Add and manage the products your business sells, including price, unit, and stock.
           </p>
         </div>
 

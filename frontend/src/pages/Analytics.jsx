@@ -48,7 +48,7 @@ function Analytics() {
         </h2>
 
         <p className="text-gray-500 mt-1">
-          Business performance and sales analytics
+          View customers, products, orders, revenue, and product sales performance.
         </p>
 
       </div>
