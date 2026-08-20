@@ -29,7 +29,7 @@ function Dashboard() {
         </h2>
 
         <p className="text-gray-500 mt-1">
-          OView a quick overview of your business activities, orders, inventory, and sales.
+          View a quick overview of your business activities, orders, inventory, and sales.
         </p>
       </div>
 
